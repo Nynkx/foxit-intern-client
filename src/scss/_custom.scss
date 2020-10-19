@@ -1,0 +1,206 @@
+// Here you can add other styles
+$--color-orange: #f08138;
+
+.plain-link {
+  position: relative;
+  text-decoration: none;
+  color: black;
+  font-style: normal;
+}
+
+.plain-link:hover {
+  text-decoration: none;
+  color: black;
+  font-style: normal;
+}
+
+.stepbar {
+  display: flex;
+  flex-direction: row;
+  border-radius: 5px;
+  background-color: white;
+  border: solid 1px lightgray;
+}
+
+.stepbar .stepbar-item:last-child {
+  border: none;
+}
+
+.stepbar-item {
+  position: relative;
+  padding: 1em;
+  padding-left: 2em;
+  flex: 1;
+  border-right: lightgray solid 1px;
+  z-index: 2;
+}
+
+.stepbar-item-arrow {
+  z-index: 1;
+  background: white;
+  position: absolute;
+  top: 1.3em;
+  right: -0.5em;
+  border-bottom: 1px solid lightgray;
+  border-right: 1px solid lightgray;
+  width: 1em;
+  height: 1em;
+  transform: rotateZ(-45deg);
+}
+.stepbar-item-label {
+  font-weight: bold;
+}
+
+.bottom-layer {
+  border-left: 5px solid $--color-orange;
+  background: transparent;
+}
+.overlay {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+}
+
+.bottom-layer > .before {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  z-index: 0;
+  border: none;
+  position: absolute;
+  padding: 0;
+  width: 0%;
+  top: 0;
+  left: -2px;
+  bottom: 0;
+  right: 0;
+  background: $--color-orange;
+  transition: width 0.4s;
+}
+
+.bottom-layer > .after {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  z-index: 0;
+  border: none;
+  position: absolute;
+  padding: 0;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: white;
+  transition: width 0.4s;
+}
+
+.bottom-layer:hover {
+  color: white;
+}
+
+.bottom-layer:hover > .before {
+  width: calc(100% + 2px);
+}
+
+.bottom-layer:hover > .after {
+  width: 0%;
+}
+
+.card-content {
+  white-space: nowrap;
+}
+.tag-blue {
+  background-color: blue !important;
+  border-right-color: blue !important;
+  color: white !important;
+}
+
+.tag-green {
+  background-color: green !important;
+  border-right-color: green !important;
+  color: white !important;
+}
+
+.tag {
+  display: inline;
+  font-size: 0.7rem;
+  background-color: lightgrey;
+  border-right-color: lightgrey;
+  color: black;
+  font-weight: bold;
+  padding: 0.5em 1em 0.5em 2em;
+  // padding: 0.25em 1em;
+  position: relative;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+  white-space: nowrap;
+  margin-left: 2em;
+
+  &:before {
+    // content: "";
+    // width: 1em;
+    // border: 1em;
+    // border-color: transparent;
+    // border-right-color: inherit;
+    // border-style: solid;
+    // bottom: 0;
+    // top: -0.05em;
+    // left: -2em;
+    // position: absolute;
+
+    content: "";
+    position: absolute;
+    width: 1.72em;
+    height: 1.72em;
+    background: inherit;
+    top: 50%;
+    right: 100%;
+    transform: translateX(50%) translateY(-50%) rotateZ(-45deg);
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    width: 0.5em;
+    height: 0.5em;
+    top: 50%;
+    left: -0.25em;
+    margin-top: -0.25em;
+    background-color: white;
+  }
+}
+
+.item {
+  display: list-item;
+  list-style-type: none;
+  padding: 0.3em 0;
+  table-layout: fixed;
+}
+
+@media only screen and (max-width: 992px) {
+  .user-name {
+    display: none;
+  }
+  .stepbar {
+    flex-direction: column;
+  }
+  .stepbar-item {
+    border-right: none;
+    border-bottom: 1px solid lightgray;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .stepbar-item-arrow {
+    top: 88%;
+    left: 50%;
+    border-right: none;
+    border-left: 1px solid lightgray;
+  }
+  .stepbar-item-label {
+    text-align: center;
+  }
+
+  .shortcutsbar {
+    flex-direction: column !important;
+  }
+}
