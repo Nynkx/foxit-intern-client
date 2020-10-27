@@ -1,10 +1,16 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
+#server folder
+/app
+/server
+/development
+
 # dependencies
 /node_modules
 /src/coreui-new
 /src/coreui-icons
 /src/coreui-charts
+/src/foxit-lib
 
 # testing
 /coverage

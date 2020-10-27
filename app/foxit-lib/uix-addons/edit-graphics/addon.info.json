@@ -1,6 +1,0 @@
-{
-    "library": "UIExtension_EditGraphicsAddon",
-    "i18n": {},
-    "scripts": [],
-    "css": ["./index.css"]
-}

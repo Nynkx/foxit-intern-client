@@ -10,6 +10,7 @@ import {
   CModalBody,
 } from "@coreui/react";
 import { history } from "../../store";
+import PDFViewer from "../widgets/PDFViewer";
 
 const Templates = () => {
   const [modalShow, setModalShow] = useState(
@@ -84,6 +85,7 @@ const Templates = () => {
       >
         New Templates
       </Link>
+      <PDFViewer />
     </>
   );
 };
