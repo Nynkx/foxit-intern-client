@@ -1,0 +1,77 @@
+[
+  {
+    "type": "square",
+    "color": "#ff0000",
+    "flags": "print",
+    "date": "D:20201030112709+07'00'",
+    "name": "1be00d8f-7a85-40b2-bf9c-40be8f73dca9",
+    "page": 0,
+    "rect": "97.72173309326172,714.5739135742188,158.24346923828125,766.22607421875",
+    "contents": "",
+    "width": 2,
+    "style": "solid",
+    "opacity": 1,
+    "creationdate": "D:20201030112709+07'00'",
+    "subject": "",
+    "title": "Foxit Web",
+    "popup": {
+      "flags": "print,",
+      "name": "58aefca2-d480-4870-b410-86e138bb0f69",
+      "page": 0,
+      "open": "no",
+      "rect": "97.72173309326172,756.22607421875,107.72173309326172,766.22607421875",
+      "type": "popup"
+    },
+    "fringe": "0,0,0,0"
+  },
+  {
+    "type": "square",
+    "color": "#ff0000",
+    "flags": "print",
+    "date": "D:20201030112710+07'00'",
+    "name": "11134469-1379-49cc-b8d4-22959052f01d",
+    "page": 1,
+    "rect": "98.34782409667969,541.3565063476562,165.6521759033203,575.7913208007812",
+    "contents": "",
+    "width": 2,
+    "style": "solid",
+    "opacity": 1,
+    "creationdate": "D:20201030112710+07'00'",
+    "subject": "",
+    "title": "Foxit Web",
+    "popup": {
+      "flags": "print,",
+      "name": "4714a080-8665-43fb-bd29-6d696cc85486",
+      "page": 1,
+      "open": "no",
+      "rect": "98.34782409667969,565.7913208007812,108.34782409667969,575.7913208007812",
+      "type": "popup"
+    },
+    "fringe": "0,0,0,0"
+  },
+  {
+    "type": "square",
+    "color": "#ff0000",
+    "flags": "print",
+    "date": "D:20201030112710+07'00'",
+    "name": "fd3b0634-8dfb-418c-aeab-b837ccba0b0b",
+    "page": 1,
+    "rect": "185.47825622558594,503.0608825683594,224.6086883544922,532.7999877929688",
+    "contents": "",
+    "width": 2,
+    "style": "solid",
+    "opacity": 1,
+    "creationdate": "D:20201030112710+07'00'",
+    "subject": "",
+    "title": "Foxit Web",
+    "popup": {
+      "flags": "print,",
+      "name": "c764ed9f-659f-44ea-8784-c35c02ea9bbc",
+      "page": 1,
+      "open": "no",
+      "rect": "185.47825622558594,522.7999877929688,195.47825622558594,532.7999877929688",
+      "type": "popup"
+    },
+    "fringe": "0,0,0,0"
+  }
+]
