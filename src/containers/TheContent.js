@@ -13,8 +13,8 @@ const loading = (
 
 const TheContent = () => {
   return (
-    <main className="c-main">
-      <CContainer fluid>
+    <main className="c-main h-100" style={{ border: "1px red solid" }}>
+      <CContainer fluid className="border h-100">
         <Suspense fallback={loading}>
           <Switch>
             {routes.map((route, idx) => {
@@ -26,7 +26,7 @@ const TheContent = () => {
                     exact={route.exact}
                     name={route.name}
                     render={(props) => (
-                      <CFade>
+                      <CFade className="h-100 border">
                         <route.component {...props} />
                       </CFade>
                     )}

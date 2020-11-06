@@ -16,6 +16,7 @@ const Templates = () => {
   const [modalShow, setModalShow] = useState(
     history.location.pathname === "/templates/create"
   );
+  const [viewer, setViewer] = useState();
 
   useEffect(() => {}, []);
 
@@ -25,11 +26,13 @@ const Templates = () => {
 
   const handleDropFile = (e) => {
     e.preventDefault();
-    var files = e.dataTransfer.files;
-    if (validateFiles(files))
-      return (document.querySelector("#file-input").files = files);
 
-    console.log("asd");
+    var files = e.dataTransfer.files;
+    if (validateFiles(files)) {
+      var fileInput = document.querySelector("#file-input");
+      fileInput.files = files;
+      loadPDFViewer(files);
+    }
   };
 
   const validateFiles = (files) => {
@@ -37,6 +40,16 @@ const Templates = () => {
       if (file.type !== "application/pdf") return false;
     });
     return true;
+  };
+
+  const handleChange = (e) => {
+    if (e.target.files == null) return;
+    loadPDFViewer(e.target.files);
+  };
+
+  const loadPDFViewer = (files) => {
+    setViewer(<PDFViewer pdf={files[0]}></PDFViewer>);
+    toggle();
   };
 
   return (
@@ -47,45 +60,49 @@ const Templates = () => {
           render={(props) => (
             <CModal show={modalShow} onClose={toggle}>
               <CModalBody>
-                <form method="post">
-                  <label
-                    id="dragdropfield"
-                    className="border"
-                    onDrop={handleDropFile}
-                    onDragOver={(e) => e.preventDefault()}
-                    style={{
-                      width: "100%",
-                      height: "200px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <div id="dnd-text">
-                      drag 'n drop file here or click to select
-                    </div>
-                    <input
-                      type="file"
-                      id="file-input"
-                      accept="application/pdf"
-                      hidden
-                    />
-                  </label>
-                </form>
+                <label
+                  id="dragdropfield"
+                  className="border"
+                  onDrop={handleDropFile}
+                  onDragOver={(e) => e.preventDefault()}
+                  style={{
+                    width: "100%",
+                    height: "200px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <div id="dnd-text">
+                    drag 'n drop file here or click to select
+                  </div>
+                  <input
+                    type="file"
+                    id="file-input"
+                    accept="application/pdf"
+                    hidden
+                    onChange={handleChange}
+                  />
+                </label>
               </CModalBody>
             </CModal>
           )}
         ></Route>
       </Switch>
-      <Link
-        to={{
-          pathname: "/templates/create",
-        }}
-        onClick={toggle}
-      >
-        New Templates
-      </Link>
-      <PDFViewer />
+      {viewer == null ? (
+        <Link
+          to={{
+            pathname: "/templates/create",
+          }}
+          onClick={toggle}
+        >
+          New Templates
+        </Link>
+      ) : (
+        ""
+      )}
+
+      {viewer}
     </>
   );
 };

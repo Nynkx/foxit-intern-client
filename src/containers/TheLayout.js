@@ -6,9 +6,9 @@ const TheLayout = () => {
     <>
       <div className="c-app c-default-layout">
         <TheSidebar />
-        <div className="c-wrapper">
+        <div className="c-wrapper " style={{ maxHeight: "100vh" }}>
           <TheHeader />
-          <div className="c-body">
+          <div className="c-body overflow-auto">
             <TheContent />
           </div>
           <TheFooter />

@@ -3,13 +3,15 @@ import StyledComponents from "styled-components";
 import * as UIExtension from "../../../foxit-lib/UIExtension.full";
 import "../../../foxit-lib/UIExtension.css";
 
-import annotList from "./customgroup.json";
+import ScreenStateHandler from "./ScreenStateHandler";
+
+// import annotList from "./customgroup.json";
 
 const StyledDiv = StyledComponents.div`
     height: 100%;
 `;
 
-const PDFViewer = () => {
+const PDFViewer = (props) => {
   var elementRef = React.createRef();
   var pdfui = null;
 
@@ -18,21 +20,6 @@ const PDFViewer = () => {
   const handleBtnClick = (e) => {
     pdfui.getPDFViewer().then((res) => {
       var doc = res.getPDFDocRender().getPDFDoc();
-
-      // doc.getAnnots().then((annots) => {
-      //   var annotJSON_Arr = [];
-      //   annots.forEach((pageAnnots) => {
-      //     var annotsInPage = [];
-      //     pageAnnots.forEach((annot) => {
-      //       console.log(annot);
-      //       annotsInPage.push(annot.exportToJSON());
-      //     });
-
-      //     annotJSON_Arr.push(annotsInPage);
-      //   });
-      //   setAnnotJSON(annotJSON_Arr);
-      // });
-      // var doc = res.getPDFDocRender().getPDFDoc();
 
       doc.exportAnnotsToJSON().then((annotsJSON) => {
         setAnnotJSON(annotsJSON);
@@ -70,12 +57,6 @@ const PDFViewer = () => {
       ),
       template: `
       <webpdf>
-        <toolbar name="toolbar" className="fv__ui-toolbar-scrollable">
-          <open-file-dropdown></open-file-dropdown>
-          <create-drawings-dropdown></create-drawings-dropdown>
-          
-        </toolbar>
-
         <viewer></viewer>
       </webpdf>
       `,
@@ -84,6 +65,9 @@ const PDFViewer = () => {
     pdfui.addUIEventListener(
       UIExtension.UIEvents.initializationCompleted,
       () => {
+        pdfui.getPDFViewer().then((viewer) => {
+          viewer.openPDFByFile(props.pdf);
+        });
         console.log("pdfui Init Completed!");
       }
     );
@@ -92,12 +76,29 @@ const PDFViewer = () => {
       pdf.eventEmitter.on(
         UIExtension.PDFViewCtrl.ViewerEvents.openFileSuccess,
         (pdfDoc) => {
-          pdfDoc.loadPDFForm();
-          var pdfform = pdfDoc.getPDFForm();
-          console.log(typeof UIExtension.PDFViewCtrl);
-          pdfDoc.importAnnotsFromJSON(annotList);
+          console.log(pdfDoc.getPageCount());
+
+          var stateHandlerManager = pdf.getStateHandlerManager();
+          stateHandlerManager.register(ScreenStateHandler);
+          stateHandlerManager.switchTo("createScreen");
         }
       );
+
+      pdf.eventEmitter.on(
+        UIExtension.PDFViewCtrl.ViewerEvents.pageLayoutRedraw,
+        (pageRender) => {
+          var $handler = pageRender.$handler;
+        }
+      );
+    });
+
+    var controlItems = document.querySelectorAll(".draggable");
+
+    controlItems.forEach((controlItem) => {
+      controlItem.setAttribute("draggable", "true");
+      controlItem.addEventListener("dragstart", (e) => {
+        e.dataTransfer.setData("text/plain", e.target.getAttribute("name"));
+      });
     });
 
     return () => {
@@ -107,10 +108,23 @@ const PDFViewer = () => {
 
   return (
     <>
-      <div>
-        <div>{JSON.stringify(annotJSON)}</div>
-        <button onClick={handleBtnClick}>asd</button>
-        <StyledDiv ref={elementRef} />
+      <div className="template-wrapper">
+        <div className="border template-viewer">
+          <StyledDiv ref={elementRef} />
+        </div>
+        <div className="border template-menu">
+          <div className="control-container">
+            <div className="control-item draggable" name="ctrl-textbox">
+              txt
+            </div>
+            <div className="control-item draggable" name="ctrl-checkbox">
+              chk
+            </div>
+            <div className="control-item draggable" name="ctrl-svslabel">
+              svs
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

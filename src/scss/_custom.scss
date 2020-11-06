@@ -204,3 +204,46 @@ $--color-orange: #f08138;
     flex-direction: column !important;
   }
 }
+
+.template-wrapper {
+  display: grid;
+  grid-template-columns: 2.25fr 0.75fr;
+  grid-template-rows: auto;
+  height: 100%;
+  border: 1px red solid;
+  grid-template-areas: "viewer menu";
+}
+
+.template-viewer {
+  grid-area: viewer;
+  overflow: auto;
+}
+
+.template-menu {
+  grid-area: menu;
+}
+
+.control-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  place-content: start center;
+}
+
+.control-item {
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  width: 60px;
+  height: 60px;
+  background-color: #ffb223;
+  margin: 5px;
+}
+
+.draggable {
+  cursor: move;
+}
+
+.control-item:hover {
+  border-style: dotted;
+}
