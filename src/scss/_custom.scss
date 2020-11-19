@@ -1,6 +1,16 @@
 // Here you can add other styles
 $--color-orange: #f08138;
 
+/* reusable */
+.ox-auto {
+  overflow-x: auto;
+}
+
+.oy-auto {
+  overflow-y: auto;
+}
+/* end of reusable */
+
 .plain-link {
   position: relative;
   text-decoration: none;
@@ -176,33 +186,9 @@ $--color-orange: #f08138;
   table-layout: fixed;
 }
 
-@media only screen and (max-width: 992px) {
-  .user-name {
-    display: none;
-  }
-  .stepbar {
-    flex-direction: column;
-  }
-  .stepbar-item {
-    border-right: none;
-    border-bottom: 1px solid lightgray;
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .stepbar-item-arrow {
-    top: 88%;
-    left: 50%;
-    border-right: none;
-    border-left: 1px solid lightgray;
-  }
-  .stepbar-item-label {
-    text-align: center;
-  }
-
-  .shortcutsbar {
-    flex-direction: column !important;
-  }
+.textboxgroup {
+  display: flex;
+  flex-direction: row;
 }
 
 .template-wrapper {
@@ -236,14 +222,44 @@ $--color-orange: #f08138;
   border-radius: 5px;
   width: 60px;
   height: 60px;
-  background-color: #ffb223;
+  background-color: rgba(252, 193, 0, 0.651);
   margin: 5px;
-}
-
-.draggable {
+  touch-action: none;
+  user-select: none;
+  z-index: 101;
   cursor: move;
 }
 
-.control-item:hover {
+.control-item:hover,
+.control-item-active {
   border-style: dotted;
+}
+
+@media only screen and (max-width: 992px) {
+  .user-name {
+    display: none;
+  }
+  .stepbar {
+    flex-direction: column;
+  }
+  .stepbar-item {
+    border-right: none;
+    border-bottom: 1px solid lightgray;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .stepbar-item-arrow {
+    top: 88%;
+    left: 50%;
+    border-right: none;
+    border-left: 1px solid lightgray;
+  }
+  .stepbar-item-label {
+    text-align: center;
+  }
+
+  .shortcutsbar {
+    flex-direction: column !important;
+  }
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch, connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   CCreateElement,
   CSidebar,
@@ -27,7 +27,7 @@ const TheSidebar = () => {
       show={show}
       onShowChange={(val) => dispatch({ type: "set", sidebarShow: val })}
     >
-      <CSidebarBrand className="d-md-down-none" to="/">
+      {/* <CSidebarBrand className="d-md-down-none" to="/">
         <CIcon
           className="c-sidebar-brand-full"
           name="logo-negative"
@@ -38,7 +38,7 @@ const TheSidebar = () => {
           name="sygnet"
           height={35}
         />
-      </CSidebarBrand>
+      </CSidebarBrand> */}
       <CSidebarNav>
         <CCreateElement
           items={navigation}

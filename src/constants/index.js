@@ -13,3 +13,7 @@ export const userConstants = {
   USER_LOGIN_SUCCESS: "USER_LOGIN_SUCCESS",
   USER_LOGOUT: "USER_LOGOUT",
 };
+
+export const pdfConstants = {
+  PDF_LOAD_SUCCESS: "PDF_LOAD_SUCCESS",
+};

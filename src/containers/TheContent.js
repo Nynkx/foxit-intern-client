@@ -14,7 +14,7 @@ const loading = (
 const TheContent = () => {
   return (
     <main className="c-main h-100" style={{ border: "1px red solid" }}>
-      <CContainer fluid className="border h-100">
+      <CContainer fluid className="border h-100 oy-auto">
         <Suspense fallback={loading}>
           <Switch>
             {routes.map((route, idx) => {
