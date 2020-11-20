@@ -4,9 +4,9 @@ import "../../foxit-lib/UIExtension.css";
 import interact from "interactjs";
 
 const TemplateHandler = (props) => {
-  console.log(props.controls);
+  //console.log(props.controls);
   //const pdfLoaded = useSelector((state) => state.pdf.pdfLoaded);
-  const [controls, setControls] = useState([]);
+  //const [controls, setControls] = useState([]);
   var controlsJSON = [];
   // event listeners
   const dragStartListener = (e) => {
@@ -22,21 +22,19 @@ const TemplateHandler = (props) => {
 
     var container = e.target.parentNode.getBoundingClientRect();
     var rect = e.target.getBoundingClientRect();
-    UIExtension.jQuery("#txt_x").val(
-      parseInt(Math.abs(container.left - rect.left))
-    );
-    UIExtension.jQuery("#txt_y").val(
-      parseInt(Math.abs(container.top - rect.top))
-    );
 
-    UIExtension.jQuery("#txt_width").val(parseInt(rect.width));
-    UIExtension.jQuery("#txt_height").val(parseInt(rect.height));
-    console.log();
-
-    target.style.webkitTransform = target.style.transform = `translate(${x}px,${y}px)`;
+    target.style.transform = target.style.webkitTransform = `translate(${x}px,${y}px)`;
 
     target.setAttribute("data-x", x);
     target.setAttribute("data-y", y);
+    if (e.dropzone) {
+      showParam({
+        top: Math.abs(container.left - rect.left),
+        left: Math.abs(container.top - rect.top),
+        width: rect.width,
+        height: rect.height,
+      });
+    }
   };
 
   const dragEndListener = (e) => {
@@ -66,9 +64,77 @@ const TemplateHandler = (props) => {
           right: true,
         },
         inertia: true,
+      })
+      .on("resizemove", (e) => {
+        var control = e.target;
+        let x = parseFloat(control.getAttribute("data-x")) || 0;
+        let y = parseFloat(control.getAttribute("data-y")) || 0;
+        x += e.deltaRect.left;
+        y += e.deltaRect.top;
+
+        control.style.width = e.rect.width + "px";
+        control.style.height = e.rect.height + "px";
+        control.style.transform = control.style.webkitTransform = `translate(${x}px, ${y}px)`;
+
+        control.setAttribute("data-x", x);
+        control.setAttribute("data-y", y);
+
+        var rectInfo = {
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          width: 0,
+          height: 0,
+        };
+        var controlRect = control.getBoundingClientRect();
+        var parentRect = control.parentNode.getBoundingClientRect();
+
+        rectInfo.top = Math.abs(parentRect.top - controlRect.top);
+        rectInfo.left = Math.abs(parentRect.left - controlRect.left);
+        rectInfo.bottom = rectInfo.top + controlRect.height;
+        rectInfo.right = rectInfo.left + controlRect.width;
+        rectInfo.width = controlRect.width;
+        rectInfo.height = controlRect.height;
+
+        showParam(rectInfo);
+      })
+      .on("resizeend", (e) => {
+        var control = e.target;
+        var dropzone = e.target.parentNode;
+        var dropzoneRect = dropzone.getBoundingClientRect();
+        var controlRect = control.getBoundingClientRect();
+
+        var Rect = {
+          top: Math.abs(dropzoneRect.top - controlRect.top),
+          left: Math.abs(dropzoneRect.left - controlRect.left),
+          bottom:
+            Math.abs(dropzoneRect.top - controlRect.top) + controlRect.height,
+          right:
+            Math.abs(dropzoneRect.left - controlRect.left) + controlRect.width,
+          width: controlRect.width,
+          height: controlRect.height,
+        };
+
+        control.style.webkitTransform = control.style.transform = "";
+        control.style.top = Rect.top + "px";
+        control.style.left = Rect.left + "px";
+        control.style.width = Rect.width + "px";
+        control.style.height = Rect.height + "px";
+        control.setAttribute("data-x", 0);
+        control.setAttribute("data-y", 0);
       });
   };
   // EO event listeners
+
+  const showParam = function (info) {
+    const query = document.querySelector.bind(document);
+
+    query("#txt_x").value = parseInt(info.left);
+    query("#txt_y").value = parseInt(info.top);
+    query("#txt_width").value = parseInt(info.width);
+    query("#txt_height").value = parseInt(info.height);
+  };
 
   //   register draggable
   useEffect(() => {
@@ -85,8 +151,8 @@ const TemplateHandler = (props) => {
         if (interaction.pointerIsDown && !interaction.interacting()) {
           var original = e.currentTarget;
           var clone = e.currentTarget.cloneNode(true);
-          var x = clone.offsetLeft;
-          var y = clone.offsetTop;
+          // var x = clone.offsetLeft;
+          // var y = clone.offsetTop;
           clone.style.position = "absolute";
           clone.style.left = e.currentTarget.offsetLeft + "px";
           clone.style.top = e.currentTarget.offsetTop + "px";
@@ -122,6 +188,7 @@ const TemplateHandler = (props) => {
         control.style.height = Rect.height + "px";
         control.style.margin = "0";
         control.style.cursor = "move";
+
         control.setAttribute("data-x", 0);
         control.setAttribute("data-y", 0);
         dropzone.appendChild(control);
@@ -132,7 +199,22 @@ const TemplateHandler = (props) => {
           pageNo: dropzone.parentNode.getAttribute("data-index"),
           deviceRect: Rect,
         };
-        control.id || registerDragResize(control);
+        if (!control.id) {
+          control.id = info.type + "-" + new Date().getTime();
+          registerDragResize(control);
+          control.addEventListener("click", (e) => {
+            e.target.parentNode
+              .querySelectorAll(".control-item")
+              .forEach((elmt) => {
+                elmt.classList.remove("control-active");
+              });
+
+            e.target.classList.add("control-active");
+          });
+          control.addEventListener("dblclick", (e) => {
+            console.log("double clicked!");
+          });
+        }
 
         // setControls((prevState) => [...prevState, info]);
         controlsJSON.push(info);
