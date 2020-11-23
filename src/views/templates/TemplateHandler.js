@@ -200,7 +200,6 @@ const TemplateHandler = (props) => {
           deviceRect: Rect,
         };
         if (!control.id) {
-          control.id = info.type + "-" + new Date().getTime();
           registerDragResize(control);
           control.addEventListener("click", (e) => {
             e.target.parentNode
@@ -217,8 +216,9 @@ const TemplateHandler = (props) => {
         }
 
         // setControls((prevState) => [...prevState, info]);
-        controlsJSON.push(info);
-        console.log(controlsJSON);
+        // controlsJSON.push(info);
+        // console.log(controlsJSON);
+        props.handleControlDrop(info, control);
       },
     });
     return () => {

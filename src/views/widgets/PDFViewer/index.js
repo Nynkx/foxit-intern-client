@@ -22,6 +22,7 @@ const PDFViewer = (props) => {
   //var templateHandler = useTemplateHandler();
   const element = elementRef.current;
   const libPath = "/foxit-lib/";
+  var controlsJSON = [];
   var pdfui = new UIExtension.PDFUI({
     viewerOptions: {
       libPath,
@@ -116,9 +117,27 @@ const PDFViewer = (props) => {
   //     });
   //   }
 
+  const createControl = (controlJSON, control) => {
+    if (!control.id) {
+      control.id = controlJSON.id =
+        controlJSON.type + "-" + new Date().getTime();
+      controlsJSON.push(controlJSON);
+      console.log(controlsJSON);
+    } else {
+      controlsJSON = controlsJSON.map((item) => {
+        if (item.id === controlJSON.id) return controlJSON;
+      });
+      console.log(controlsJSON);
+    }
+  };
+
   return (
     <>
-      <TemplateHandler /*  controls={elementRef.current} */></TemplateHandler>
+      <TemplateHandler
+        handleControlDrop={createControl}
+        controlUpdate=""
+        controlDelete=""
+      ></TemplateHandler>
       <div className="template-wrapper">
         <div className="border template-viewer">
           <StyledDiv ref={elementRef} />

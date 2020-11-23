@@ -62,9 +62,9 @@ const TheHeader = () => {
           onClick={toggleSidebar}
         />
       </CTooltip>
-      <CHeaderBrand className="mx-auto d-lg-none" to="/">
+      {/* <CHeaderBrand className="mx-auto d-lg-none" to="/">
         <CIcon name="logo" height="48" alt="Logo" />
-      </CHeaderBrand>
+      </CHeaderBrand> */}
 
       <CHeaderNav className="d-md-down-none mr-auto">
         {/* <CHeaderNavItem className="px-3" >
