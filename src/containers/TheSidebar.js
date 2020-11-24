@@ -68,7 +68,6 @@ const TheSidebar = () => {
           x="0px"
           y="0px"
           viewBox="0 0 295 120"
-          enable-background="new 0 0 295 120"
           space="preserve"
           content={logo}
           height={35}
@@ -81,7 +80,6 @@ const TheSidebar = () => {
           y="0px"
           preserveAspectRatio="none"
           viewBox="0 0 200 150"
-          enable-background="new 0 0 200 150"
           content={logoMinimized}
           height={35}
         />
