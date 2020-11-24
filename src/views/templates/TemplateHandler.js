@@ -123,6 +123,18 @@ const TemplateHandler = (props) => {
         control.style.height = Rect.height + "px";
         control.setAttribute("data-x", 0);
         control.setAttribute("data-y", 0);
+
+        var info = {
+          id: control.id,
+          type: control.getAttribute("data-type"),
+          pageNo: parseInt(
+            control.getAttribute("data-index") ||
+              dropzone.parentNode.getAttribute("data-index")
+          ),
+          deviceRect: Rect,
+        };
+
+        props.handleControlDrop(info, control);
       });
   };
   // EO event listeners
@@ -215,12 +227,10 @@ const TemplateHandler = (props) => {
           });
         }
 
-        // setControls((prevState) => [...prevState, info]);
-        // controlsJSON.push(info);
-        // console.log(controlsJSON);
         props.handleControlDrop(info, control);
       },
     });
+
     return () => {
       return;
     };

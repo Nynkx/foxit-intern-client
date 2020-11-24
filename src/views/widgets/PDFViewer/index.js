@@ -126,6 +126,7 @@ const PDFViewer = (props) => {
     } else {
       controlsJSON = controlsJSON.map((item) => {
         if (item.id === controlJSON.id) return controlJSON;
+        return item;
       });
       console.log(controlsJSON);
     }
