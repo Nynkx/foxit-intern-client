@@ -7,6 +7,7 @@ import "../../../foxit-lib/UIExtension.css";
 import ScreenStateHandler from "./ScreenStateHandler";
 import TemplateHandler from "../../templates/TemplateHandler";
 import interact from "interactjs";
+import { CButton } from "@coreui/react";
 
 // import annotList from "./customgroup.json";
 
@@ -14,7 +15,7 @@ const StyledDiv = StyledComponents.div`
     height: 100%;
 `;
 
-const PDFViewer = (props) => {
+const TemplateDesigner = (props) => {
   // const dispatch = useDispatch();
   //const pdfLoaded = useSelector((state) => state.pdf.pdfLoaded);
 
@@ -60,6 +61,11 @@ const PDFViewer = (props) => {
       UIExtension.UIEvents.initializationCompleted,
       () => {
         console.log("pdfui Init Completed!");
+        // pdfui.getPDFViewer().then((pdfViewer) => {
+        //   var stateHandlerManager = pdfViewer.getStateHandlerManager();
+        //   stateHandlerManager.register(ScreenStateHandler);
+        //   stateHandlerManager.switchTo("createScreen");
+        // });
       }
     );
 
@@ -77,9 +83,23 @@ const PDFViewer = (props) => {
           elementRef.current = pdfDoc;
         });
 
+        //console.log(stateHandlerManager);
+
         pdfViewer.eventEmitter.on(ViewerEvents.renderFileSuccess, (pdfDoc) => {
           console.log("File Rendered!");
         });
+        pdfViewer.eventEmitter.on(
+          ViewerEvents.renderPageSuccess,
+          (pageRender) => {
+            var scale = pageRender.scale;
+            var handler = pageRender.$handler[0];
+            var controlItems = handler.querySelectorAll(".control-item").length;
+
+            for (var i = 0; i < controlItems.length; ++i) {
+              console.log(i);
+            }
+          }
+        );
       });
     }
 
@@ -132,18 +152,37 @@ const PDFViewer = (props) => {
     }
   };
 
+  const deleteControl = (control) => {
+    var id = control.id;
+    control.parentElement.removeChild(control);
+    for (var i = 0; i < controlsJSON.length; ++i) {
+      if (controlsJSON[i].id === id) {
+        controlsJSON.splice(i, 1);
+        return;
+      }
+    }
+  };
+
   return (
     <>
       <TemplateHandler
         handleControlDrop={createControl}
         controlUpdate=""
-        controlDelete=""
+        controlDelete={deleteControl}
       ></TemplateHandler>
-      <div className="template-wrapper">
-        <div className="border template-viewer">
+      <div className="border template-wrapper">
+        <div className="template-header">
+          <CButton color="primary" className="mr-1">
+            Create
+          </CButton>
+          <CButton color="danger" className="mr-1">
+            Cancel
+          </CButton>
+        </div>
+        <div className="border template-design-viewer">
           <StyledDiv ref={elementRef} />
         </div>
-        <div className="p-1 template-menu">
+        <div className="p-1 template-design-menu">
           <div className="control-container">
             <div
               className="control-item tpl-draggable"
@@ -217,4 +256,4 @@ const PDFViewer = (props) => {
   );
 };
 
-export default PDFViewer;
+export default TemplateDesigner;

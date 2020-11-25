@@ -40,7 +40,7 @@ const TemplateHandler = (props) => {
   const dragEndListener = (e) => {
     e.relatedTarget
       ? console.log("control dropped on dropzone!")
-      : e.target.parentNode.removeChild(e.target);
+      : props.controlDelete(e.target);
   };
 
   const registerDragResize = function (elmt) {
@@ -229,6 +229,13 @@ const TemplateHandler = (props) => {
 
         props.handleControlDrop(info, control);
       },
+    });
+
+    document.addEventListener("keydown", (e) => {
+      var activeElmt = document.querySelector(".control-active");
+      if (e.code === "Delete" && activeElmt) {
+        props.controlDelete(activeElmt);
+      }
     });
 
     return () => {

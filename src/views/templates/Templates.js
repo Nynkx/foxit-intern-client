@@ -10,7 +10,6 @@ import {
   // CModalBody,
   CLink,
 } from "@coreui/react";
-import PDFViewer from "../widgets/PDFViewer";
 
 const CreateTemplate = React.lazy(() => import("./CreateTemplate"));
 

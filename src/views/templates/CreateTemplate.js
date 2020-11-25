@@ -7,7 +7,7 @@ import {
   CButton,
 } from "@coreui/react";
 
-import PDFViewer from "../widgets/PDFViewer";
+import TemplateDesigner from "./TemplateDesigner";
 import TemplateHandler from "./TemplateHandler";
 
 const CreateTemplate = function () {
@@ -72,7 +72,7 @@ const CreateTemplate = function () {
         </CModalFooter>
       </CModal>
 
-      <PDFViewer pdf={PDFFile}></PDFViewer>
+      <TemplateDesigner pdf={PDFFile}></TemplateDesigner>
     </>
   );
 };
