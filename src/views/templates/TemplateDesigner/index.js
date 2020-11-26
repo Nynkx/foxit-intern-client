@@ -83,6 +83,10 @@ const TemplateDesigner = (props) => {
           elementRef.current = pdfDoc;
         });
 
+        window.addEventListener("resize", () => {
+          pdfViewer.redraw();
+        });
+
         //console.log(stateHandlerManager);
 
         pdfViewer.eventEmitter.on(ViewerEvents.renderFileSuccess, (pdfDoc) => {
@@ -96,7 +100,7 @@ const TemplateDesigner = (props) => {
             var controlItems = handler.querySelectorAll(".control-item").length;
 
             for (var i = 0; i < controlItems.length; ++i) {
-              console.log(i);
+              console.log(controlItems[i].style.left);
             }
           }
         );
