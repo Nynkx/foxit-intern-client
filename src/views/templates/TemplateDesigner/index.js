@@ -84,7 +84,7 @@ const TemplateDesigner = (props) => {
         });
 
         window.addEventListener("resize", () => {
-          pdfViewer.redraw();
+          //pdfViewer.redraw();
         });
 
         //console.log(stateHandlerManager);
@@ -95,13 +95,20 @@ const TemplateDesigner = (props) => {
         pdfViewer.eventEmitter.on(
           ViewerEvents.renderPageSuccess,
           (pageRender) => {
-            var scale = pageRender.scale;
-            var handler = pageRender.$handler[0];
-            var controlItems = handler.querySelectorAll(".control-item").length;
+            var scale = pageRender.getScale();
+            var controlItems = document.querySelectorAll(".control-item");
+            //console.log(scale);
 
             for (var i = 0; i < controlItems.length; ++i) {
-              console.log(controlItems[i].style.left);
+              //console.log();
             }
+          }
+        );
+
+        pdfViewer.eventEmitter.on(
+          ViewerEvents.zoomToSuccess,
+          (oldScale, newScale) => {
+            console.log(newScale);
           }
         );
       });
